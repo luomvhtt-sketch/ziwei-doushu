@@ -3,7 +3,7 @@
 欢迎提问题、提修复、提建议。先说清两件事，能省掉很多来回：
 
 - 本仓库是 [ouranic.cn](https://ouranic.cn/?from=gh-contrib) 排盘引擎的**开源快照**，定期从线上同步（节奏见 README「维护节奏与贡献」）。
-- 开源版**不含**断语库、AI 解读提示词和任何 `/api/*` 后端接口（见 README「开源边界」）。AI 解读、合盘分析在开源版里返回 404 是预期行为，需要你自己实现。
+- 开源版**不含**断语库、线上 AI 解读提示词和合盘接口 `/api/heming`（见 README「开源边界」）。`/api/interpret` 只是把命盘摘要转发到你自己配置的 OpenAI 兼容服务；没配密钥时返回中文说明，不会编造解读。
 
 ## 提问题
 
@@ -37,4 +37,4 @@ npm test             # 排盘回归
 
 ---
 
-**English.** Issues and PRs are welcome. This repo is an open snapshot of the charting engine behind ouranic.cn; the interpretation database, AI prompts and all `/api/*` backend routes are not included, so AI features return 404 by design. For a chart you believe is wrong, please use the "Chart result question" form with full birth data and a reference result. Before opening a PR, run `npm ci`, `npm run typecheck` and `npm test`; changes to chart results need evidence and a regression test.
+**English.** Issues and PRs are welcome. This repo is an open snapshot of the charting engine behind ouranic.cn. The interpretation database, commercial AI prompts, and `/api/heming` are not included. `/api/interpret` only relays a chart summary to an OpenAI-compatible endpoint you configure on the server. For a chart you believe is wrong, please use the "Chart result question" form with full birth data and a reference result. Before opening a PR, run `npm ci`, `npm run typecheck` and `npm test`; changes to chart results need evidence and a regression test.

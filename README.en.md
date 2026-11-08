@@ -76,11 +76,11 @@ npm run typecheck    # TypeScript check
 npm test             # charting regression tests
 ```
 
-**No API key is needed for charting.** The open-source version contains **no backend routes**: AI interpretation (`/api/interpret`) and compatibility analysis (`/api/heming`) return 404 until you implement them yourself.
+**No API key is needed for charting.** `/api/interpret` forwards a chart summary to an OpenAI-compatible endpoint configured only on the server (`ZIWEI_AI_BASE_URL`, `ZIWEI_AI_MODEL`, `ZIWEI_AI_API_KEY`; see `.env.example`). Without them it returns a Chinese explanation and does not invent a reading. The key never goes to the browser. Chart text is sent to the configured host. Readings are cultural entertainment, not medical or investment advice. `/api/heming` is still absent.
 
 ## What is not included
 
-The interpretation database (`lib/ziwei/db-analysis.ts` is a placeholder), AI prompts, all `/api/*` backend routes, user accounts, payments, and deployment configuration.
+The interpretation database (`lib/ziwei/db-analysis.ts` is a placeholder), the commercial AI prompts, `/api/heming`, user accounts, payments, and deployment configuration. A minimal `/api/interpret` route is included and only relays a chart summary to your own model endpoint.
 
 ## Interpretation dataset v4.0 (674,976 charts × 13 topics, 2026-10-15)
 

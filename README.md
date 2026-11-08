@@ -282,7 +282,7 @@ cd ziwei-doushu
 # 安装依赖
 npm install
 
-# 配置环境变量（只看排盘可以跳过；AI 配置仅在你自己实现了 /api/* 接口时才用得上）
+# 配置环境变量（只看排盘可以留空。AI 解读读取服务端 ZIWEI_AI_BASE_URL / ZIWEI_AI_MODEL / ZIWEI_AI_API_KEY）
 cp .env.example .env.local
 
 # 启动开发服务器
@@ -298,7 +298,7 @@ npm test            # 排盘引擎回归（768 盘 × 紫微铁律、夏令时�
 
 每次 push 与 PR 都会在 GitHub Actions 上跑同一套（见 [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)）。
 
-> **注意：开源版不含后端 API 路由。**排盘、命盘展示、合盘起盘都在浏览器里用本仓库的引擎完成，**不需要任何 API Key**。AI 解读（`/api/interpret`）和合盘 AI 分析（`/api/heming`）需要你自己实现接口；没实现之前，这两处会直接提示「开源版不含该接口」，配置 API Key 也不会变成可用（#30 就是这个原因）。
+> **排盘不需要 API Key。**排盘、命盘展示、合盘起盘都在浏览器里完成。`/api/interpret` 把当前命盘摘要发给你自己配置的 OpenAI 兼容服务，并按页面已有的 SSE（`data: {"delta":{"text":"..."}}`，以 `data: [DONE]` 结束）流式返回。未设置 `ZIWEI_AI_BASE_URL`、`ZIWEI_AI_MODEL`、`ZIWEI_AI_API_KEY` 时返回中文说明，不会编造解读。密钥只放在服务端，请求体不能改模型地址。命盘与提问会发送到该地址。内容是传统文化娱乐参考，不保证预测准确，也不构成确定性的医疗或投资建议。合盘 `/api/heming` 仍未实现。示例见 [`.env.example`](./.env.example)。
 
 ---
 
@@ -387,7 +387,7 @@ npm test            # 排盘引擎回归（768 盘 × 紫微铁律、夏令时�
 | | 内容 |
 |---|---|
 | ✅ **开源** | 排盘引擎（`lib/ziwei/`）、古籍公版原文（`lib/classics/`）、SEO 知识图谱（`lib/seo/`）、Demo 界面、51.8 万样本数据集、13 维解读数据集 v4.0 |
-| ❌ **不开源** | 断语库（`lib/ziwei/db-analysis.ts` 是占位，线上是上万行的 13 主题断语）、AI 解读 prompt、后端 API（`/api/interpret` 等）、用户系统（登录 / 会员 / 支付）、服务端安全（签名、防刷、水印）、部署配置 |
+| ❌ **不开源** | 断语库（`lib/ziwei/db-analysis.ts` 是占位，线上是上万行的 13 主题断语）、线上 AI 解读 prompt、合盘接口 `/api/heming`、用户系统（登录 / 会员 / 支付）、服务端安全（签名、防刷、水印）、部署配置。本仓库另有一个最小的 `/api/interpret`，只把命盘摘要转发到你自己的 OpenAI 兼容服务，不含断语库。 |
 
 如果你需要 AI 解读能力，可以参考 `lib/ziwei/patterns.ts` 和 `heming-knowledge.ts` 里的知识库，结合任意 LLM 自行构建 prompt。
 
