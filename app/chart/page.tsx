@@ -13,9 +13,9 @@ import type { BirthInfo, ZiweiChart, Palace } from '@/lib/ziwei/types';
  * 这是一个最小可运行示例：用本仓库的排盘引擎 generateChart() 配合基础 UI
  * 组件，渲染一张完整紫微命盘 + 基础解读，并支持本命 / 大限 / 流年切换。
  *
- * 说明：线上商业版的完整交互界面（重设计的新 UI、AI 流式解读、合盘、分享
- * 卡片等）不在开源范围内；但排盘内核——安星算法、四化、格局识别、古籍库——
- * 完全开放（见 lib/ziwei/*），可自由二次开发出你自己的界面。
+ * 说明：线上商业版的完整交互界面不在开源范围内。本页在服务端配好模型后，
+ * 会通过 /api/interpret 请求流式解读；未配置时面板显示中文说明，不会编造内容。
+ * 排盘内核——安星算法、四化、格局识别、古籍库——完全开放（见 lib/ziwei/*）。
  */
 export default function ChartPage() {
   const [chart, setChart] = useState<ZiweiChart | null>(null);
